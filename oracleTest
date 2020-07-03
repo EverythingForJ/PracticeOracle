@@ -1,0 +1,41 @@
+CREATE USER jun IDENTIFIED BY 111111;
+// 사용자아이디jun과 비밀번호 11111생성
+
+// 오류 ORA-65096: 발생시
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+// 입력. 세션 변경됨.
+// 후에 다시 생성시 생성완료가능.
+
+GRANT DBA TO jun;
+// 최고 권한 부여
+// 이후 생성 ID와 비번 입력후 접속 가능해짐
+
+CREAT TABLE topic (
+	id NUMBER NOT NULL,
+	title VARCHAR2(50) NOT NULL,
+	description VARCHAR2(4000),
+	created DATE NOT NULL
+);
+
+// 테이블을 만든다. 
+// id/컬럼명(내 마음대로) NUMBER/데이터형식은 숫자여야한다. NOT NULL/데이터값이 무조건있어야한다.
+// title/컬럼명 VARCHAR2(50)/제목이 50글자이상이면 짤린다. 
+// description/컬럼명 VARCHAR2(4000)/VARCHAR는 최대4000글자. NULL/쓰지않아도된다.
+// created DATE/날짜,시간을 위한 데이터타입
+
+SELECT table_name FROM all_tables WHERE OWNER = 'JUN';
+// 모든 테이블 목록을 보여준다.
+// 사용자ID 대문자 사용해야 가능.
+
+// topic 테이블에 행 추가하기
+INSERT INTO topic
+  (id, title, description,created)
+  VALUES
+  (1, 'ORACLE', 'ORACLE IS...', SYSDATE);
+
+//	(id, title, description, created) // 이 컬럼들에 값을 넣겠다.
+//	VALUES // 그 값의 구체적인 내용은
+//	(1,'ORACLE','ORACLE IS ...',SYSDATE(현재시간을 적는다));
+
+commit;
+//행을 추가하거나 수정작업을 했다면 반드시 COMMIT;명령을 수행한다.
