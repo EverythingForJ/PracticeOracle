@@ -93,4 +93,51 @@ SELECT * FROM topic
 
 ------------------------------------------------------------------------------------------
 
+UPDATE topic 
+	SET
+	title = 'MSSQL',
+	description = 'MSSQL is ...'
+	WHERE
+	id = 3;
+// 행의 데이터를 바꾼다.
+// id=3의 행의 title과 description을 바꾼다.
+// where를 안쓸경우 모든 행의 데이터가 바뀌므로 주의
+
+commit;
+// 작업한 내용이 실제 반영되도록 한다.
+
+DELETE FROM topic WHERE id = 3;
+// topic테이블의 id=3인 행을 삭제하겠다/
+
+// 테이블 지우기
+DROP TABLE topic;
+// topic이란 테이블을 지운다.
+// commit 할 필요 없음.
+
+
+// 기본키,주키,프라이머리키란 다른 것과 구분하는 식별자.
+// 중요한 것은 중복되면 안된다!
+// 테이블 생성 때 만들어도 되고, 후에 수정해도되지만.
+// 생성할 때 만드는 것을 추천
+CREAT TABLE topic (
+	id NUMBER NOT NULL,
+	title VARCHAR2(50) NOT NULL,
+	description VARCHAR2(4000),
+	created DATE NOT NULL,
+	CONSTRAINT PK_TOPIC PRIMARY KEY(id)
+);
+// CONSTRAINT는 제약조건이라는 뜻
+// 제약조건으로 프라이머리키를 하고 
+// 이름은 PK_TOPIC이다.
+// ID 컬럼에다 프라이머리키를 건다.
+// 앞으로 insert할때 id값이 같은 행을 추가하려한다면 무결성 제약조건에 위배되며 만들어지지않는다.
+
+// SELECT id, title FROM topic WHERE id = 2;
+// 데이터를 검색할때 만약 프라이머리키를 적용한 컬럼을 기준으로 데이터를 찾는다면
+// 프라이머리키가 없을때 보다 훨씬 빠르게 데이터를 찾을 수 있다.
+// 필수는 아니지만 경제성이 훨씬 뛰어나다.
+CONSTRAINT PK_TOPIC PRIMARY KEY(id, title)
+// id와 title에 프라이머리키를 건다.(복합키)
+
+
 
