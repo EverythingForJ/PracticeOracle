@@ -1,3 +1,4 @@
+- SQL PLUS -
 CREATE USER jun IDENTIFIED BY 111111;
 // 사용자아이디jun과 비밀번호 11111생성
 
@@ -139,5 +140,23 @@ CREAT TABLE topic (
 CONSTRAINT PK_TOPIC PRIMARY KEY(id, title)
 // id와 title에 프라이머리키를 건다.(복합키)
 
+---------------------------------------------------------------------------------------------------
 
+CREATE SEQUENCE SEQ_TOPIC;
+// 시퀀스를 만든다. 시퀀스의 이름은 SEQ_topic이다.
+// 이제 자동으로 프라이머리키가 중복되지않게 1씩증가시켜주는 방법
+INSERT INTO topic
+  (id, title, description,created)
+  VALUES
+  (SEQ_TOPIC.NEXTVAL, 'MongoDB', 'MongoDB IS...', SYSDATE);
+// 행을 추가하며, 프라이머리키 값에 SEQ_TOPIC.NEXTVAL를 사용.
+// 프라이머리키가 가지고 있는 값에 1을 추가하여, 행 생성.
 
+SELECT SEQ_TOPIC.CURRVAL FROM TOPIC;
+// TOPIC테이블이 가진 모든 행의 시퀀스의 현재값을 보여준다.
+// 가진 행만큼 시퀀스를 보여줌
+
+SELECT SEQ_TOPIC.CURRVAL FROM DUAL;
+// DUAL은 가상의 테이블로 모든 행의 시퀀스가 아닌, 최종 시퀀스값
+// 하나만 보여준다.
+// 시퀀스와 프라이머리키는 하나의 패밀리이며, 같이 사용해야 효율이 높아진다.
