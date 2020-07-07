@@ -160,3 +160,17 @@ SELECT SEQ_TOPIC.CURRVAL FROM DUAL;
 // DUAL은 가상의 테이블로 모든 행의 시퀀스가 아닌, 최종 시퀀스값
 // 하나만 보여준다.
 // 시퀀스와 프라이머리키는 하나의 패밀리이며, 같이 사용해야 효율이 높아진다.
+
+// join 알아보기
+SELECT * FROM topic LEFT JOIN author ON topic.author_id=author.id;
+// topic 테이블 옆에 author 테이블을 왼쪽에 붙여서 같이 보여줘.
+// topic 테이블의 author_id 컬럼의 데이터와 author테이블의 id컬럼의 데이터값이 동일한 값을 붙여보여준다.
+// 다른 두 테이블을 마치 하나의 테이블처럼 보여주는 좋은 가독성을 가진 기능
+
+SELECT TOPIC.ID TOPIC_ID, TITLE, NAME FROM TOPIC
+// TOPIC 테이블의 ID 컬럼을 알아보기 쉽게하기 위해 TOPIC_ID라는 별명을 붙여 표시한다.
+
+SELECT T.ID TOPIC_ID, TITLE, NAME FROM TOPIC T
+// 테이블에 T라는 별명을 붙여 명령문 작성시 좀 더 편리하게 사용할 수 있다.
+// TOPIC.ID -> T.ID
+
