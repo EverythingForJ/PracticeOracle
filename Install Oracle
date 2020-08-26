@@ -1,0 +1,26 @@
+오라클 설치하기( 19c version )
+
+1. WINDOWS.X64_193000_db_home 압축 풀기. ( 19.3 버전 )
+1-1. 폴더에 생성하고 그 안에 압축 풀기. 폴더 지정안하면 폴더 다 분산됨.
+1-2. C: 밑으로 옮기기
+
+2. setup.exe 관리자 권한으로 실행하기
+2-1. 단일 인스턴스 - 서버 클래스 설정 - 고급 설치 - 엔터프라이즈에디션 - 가상 계정 사용 - C:\app\OracleORCL로 설정
+- 일반용/트랜잭션 처리 - orcl,orcl로 설정되어있는지 확인 후 컨테이너 db생성 체크 해제
+- 문자 집합에서 유니코드인 것 확인, 샘플스키마에서 디비에 샘플스키마설치 체크하기.
+- db파일 위치 지정: C:\app\OracleORCL\oradata인지 확인하기 - 다음(등록x) - 다음(복구사용x)
+- 모든 계정에 동일한 비밀번호 사용(원래는 보안 때문에 안됨) // 비번 javaoracle - 설치 클릭
+( 포트번호 5500은 엔터프라이즈매니저포트다 ) (http://localhost:5500/em - 로그인하여 확인 가능)
+
+// (실행 control - 시스템 및 보안 - 방화벽 - 고급설정 - 인바운드 규칙 - 새 규칙 - 포트 - 특정로컬포트 1521 - 연결 허용 - 다음
+- 이름 : oracle - 마침 // 서버 역할을 할 머신만 이렇게 설정하면 된다.)
+
+3. 설치 후 확인 작업
+3-1. C:\app\OracleORCL 밑에 oradata 있는지 확인
+3-2. C:\Program Files\Oracle에 Inventory있는지 확인
+3-3. C:\Users\SIST4-20에 Oracle있는지 확인하기
+3-4. 실행 services.msc 에서 Listener와 ServiceORCL제외하고 사용안함으로 바꾸고 실행 중지, 나머지 2개는 수동, 실행으로 설정
+( 매일 oracle 시작 전 ServiceORCL 실행되는지 확인 후 Listener 실행되는지 확인하기. )
+
+4. cmd 컨트롤시프트엔터(관리자모드) - sqlplus /nolog - conn(connect) sys as sysdba(javaoracle) // 로그인 완료
+- SELECT username FROM DBA_USERS; // 모든 유저 이름들만 검색해라
