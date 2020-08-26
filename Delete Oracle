@@ -1,0 +1,25 @@
+오라클 삭제하는 방법
+
+1. 오라클 서비스를 중지 한다.
+실행 - services.msc - oralce 다 중지
+
+2. 전용 삭제 프로그램을 사용하여 삭제
+2-1. C:\Users\SIST4-20\Downloads\db_home\deinstall / deinstall.bat 실행하기
+2-2. 제품 설치 해제 클릭 - (설치되어 있는오라클 제품)하나 아래 하위폴더 선택 후 제거하기
+( 안 보일 경우 빈 홈을 표시합니다. 클릭 )
+
+3. 하드디스크에서 오라클 데이터베이스 폴더 삭제
+3-1. 사용자폴더에 있는 폴더도 지우기 / c:밑에 있는 폴더 / program files 밑에 있는 폴더
+
+4. 레지스트리 영역 삭제
+4-1. 실행 - regedit(레지스트리 편집기)
+4-2. HKEY_LOCAL_MACHINE - software - oracle 삭제
+4-3. HKEY_LOCAL_MACHINE - system - ControlSet001 - services - oracle들어간 6개 파일 다 삭제
+4-4. HKEY_CLASSES_ROOT - OraOLEDB 관련 8개 다 삭제하기
+
+5. 시작 메류는 비롯한 기타 파일 삭제
+
+6. 최종확인
+6-1. 재부팅
+6-2. 실행 - services.msc 에서 오라클 없는지 확인하기
+6-3. 시작메뉴에도 없는지 확인하기
