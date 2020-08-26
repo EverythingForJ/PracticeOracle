@@ -1,0 +1,140 @@
+-- 모든 row와 모든 column 조회하기
+SELECT *
+FROM salgrade;
+
+--2. 모든 row와 특정 column 조회하기
+SELECT ename, empno 
+From emp;
+
+-- 부서테이블에서 부서 번호와 부서명 조회하기
+
+DESC DEPT;
+
+SELECT deptno, dname
+FROM dept;
+
+-- 사원 테이블에서 사원번호와 부서번호 조회하기
+SELECT empno, deptno
+FROM emp;
+
+-- 사원 테이블에서 직무를 조회하기
+-- SELECT  ALL job
+SELECT DISTINCT job
+FROM emp;
+
+-- 우리 회사 사원들은 몇개의 부서에 속해 있습니까?
+SELECT DISTINCT deptno
+FROM emp;
+
+-- 별칭 사용하기
+SELECT empno employeeNumber, ename "Employee Name", job "담당", sal "@#$ASD", deptno AS "띄워쓰기 애매할 때 AS 쓰기"
+FROM emp;
+
+
+
+
+-- sal이란 주급을 연봉으로 바꾸기
+
+-- SELECT sal * 12 + COMM
+SELECT sal * 12 + COMM AS 연봉 -- COMM이 nul이면 연산이 되지않고 결과는 null이다. oracle에서 null = empty 이다.
+FROM emp; -- comm이 0인 곳은 연산이 된다. null은 안된다.
+
+-- SELECT comm
+-- FROM emp;
+
+SELECT sal * 12 + NVL(COMM, 0) AS "연봉 은"  -- null을 처리해주는 NVL() // null을 0으로 바꾸기
+FROM emp;
+
+
+-- 사원테이블에서 사원의 사번, 사원의 이름, 직무, 월급, 보너스, 연봉을 조회하시오.
+SELECT empno as 사번, ename as "사원의 이름", job AS "직무", sal AS 월급, comm as 보너스, sal * 12 + NVL(comm, 0) AS 연봉
+FROM emp;
+
+
+-- 4. 정렬하기
+SELECT ename as "사원명"
+FROM emp
+-- ORDER BY ename ASC;
+-- ORDER BY ename; -- 기본값 오름차순
+ORDER BY ename DESC; -- 내림차순 DESC
+
+SELECT empno, ename
+FROM emp
+ORDER BY empno ASC, ename DESC; -- 1차 정렬: empno, 2차 정렬: ename
+
+-- 사원테이블에서 부서번호로 오름차순 정렬, 월급을 내림차순으로 정렬하시오
+SELECT deptno, sal
+FROM emp
+ORDER BY deptno, sal DESC;
+
+-- 사원테이블에서 사원의 사번, 사원의 이름, 직무, 월급, 보너스, 연봉을 조회하시오. 단, 연봉은 내림차순으로 출력하시오.
+SELECT empno as 사번, ename as "사원의 이름", job AS "직무", sal AS 월급, comm as 보너스, sal * 12 + NVL(comm, 0) AS 연봉
+FROM emp
+ORDER BY 연봉 DESC;
+
+-- test
+SELECT empno AS "EMPLOYEE_NO", ename AS "EMPLOYEE_NAME",job, mgr AS "MANAGER", hiredate, sal AS "SALARY", comm AS "COMMISSION", deptno AS "DEPARTMENT_NO"
+FROM emp
+ORDER BY deptno DESC, "EMPLOYEE_NAME" ASC;
+
+
+-- NULL 처리
+-- NVL() 함수
+-- SELECT NVL(comm, 'NULL') -- 데이터 타입이 일치해야한다. comm은 숫자형
+-- SELECT NVL(comm, 100)
+-- SELECT NVL(ename, '한글')
+-- SELECT NVL(hiredate, '12/09/04')
+SELECT NVL(mgr, 23)
+FROM emp;
+
+
+-- 연결 연산자 ||  // 문자열 연결하기
+SELECT 'Hello, ' || 'World'
+FROM dual;
+
+SELECT ('사원번호 ' || empno || '는' || ename || '입니다.') AS "결과"
+FROM emp;
+
+
+-- 조건절
+-- where절은 조건절이라고 한다. 조건에 만족하는 행만 출력
+SELECT ename, job, sal
+FROM emp
+--WHERE job = 'MANAGER';
+WHERE deptno = 10 and sal > 2000;
+
+SELECT empno, ename
+FROM emp
+WHERE empno = 7782;
+
+-- AND, OR
+-- 사원테이블에서 부서번호가 20번 부서에 속해있는 사원 중에 월급이 1000불 이하인 사원의 정보를 조회하시오.
+SELECT *
+FROM emp
+WHERE deptNO=20 AND sal<=1000;
+
+-- 사원테이블에서 부서번호가 10번이거나 월급이 3000불에서 5000불 사이인 사원의
+-- 사번,이름,월급,부서번호를 조회하시오.
+SELECT  empno, ename, sal, deptno
+FROM    emp
+WHERE   deptno = 10 or ( sal >= 3000 and sal <= 5000);
+
+-- 논리부정연산자 not
+SELECT  deptno, dname, loc
+FROM    dept
+WHERE   NOT(deptno = 10 OR deptno = 20);
+-- WHERE   deptno != 10 AND deptno != 20;
+
+-- IN 연산자
+-- OR 대체, OR이 많아질 경우 사용
+SELECT  deptno, dname, loc
+FROM    dept
+-- WHERE   deptno = 10 OR deptno = 20;
+WHERE   deptno IN(10,20);
+-- WHERE   deptno NOT IN(10,20);
+
+-- 사원테이블에서 직무가 salesman 이거나manager거나 president인 사원의 
+-- 사원 이름, 직무를 조회하시오.
+SELECT ename, job
+FROM emp
+WHERE job IN('SALESMAN', 'MANAGER', 'PRESIDENT');
