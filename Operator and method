@@ -151,3 +151,52 @@ WHERE dong LIKE '%개포%';
 -- INTERSECT
 -- SELECT ename, job
 -- FROM emp_clerk; -- 4명
+
+-- 125p 실습
+SELECT *
+FROM emp
+WHERE ename LIKE '%S';
+
+SELECT empno, ename, job, sal, deptno
+FROM emp
+WHERE deptno = 30 and job = 'SALESMAN';
+
+SELECT empno,ename,sal,deptno
+FROM emp
+WHERE deptno IN(20,30) and sal > 2000;
+
+SELECT empno,ename,sal,deptno
+FROM emp
+WHERE deptno IN(20,30)
+INTERSECT
+SELECT empno,ename,sal,deptno
+FROM emp
+WHERE sal > 2000;
+
+SELECT *
+FROM emp
+WHERE sal < 2000 OR sal > 3000;
+
+SELECT ename, empno,sal,deptno
+FROM emp
+WHERE deptno = 30 and ename LIKE '%E%' and sal NOT BETWEEN 1000 AND 2000;
+
+SELECT *
+FROM emp
+WHERE comm IS NULL and mgr IS NOT NULL
+INTERSECT
+SELECT *
+FROM emp
+WHERE job IN('MANAGER', 'CLERK') and ename NOT LIKE '_L%';
+
+ALTER SESSION
+SET NLS_DATE_FORMAT='YYYY-MM-DD';
+SELECT empno, ename, hiredate
+FROM emp
+WHERE hiredate > '1983-12-31';
+
+SELECT empno, ename, comm
+FROM emp
+WHERE comm IS NULL;
+
+-- 실습 끝
