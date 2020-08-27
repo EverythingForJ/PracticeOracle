@@ -98,3 +98,56 @@ WHERE dong LIKE '%개포%';
 -- SELECT *
 -- FROM    emp
 -- ORDER BY comm DESC ;
+
+-- CREATE TABLE emp10
+-- AS
+-- SELECT * FROM EMP
+-- WHERE deptno = 10;
+
+-- CREATE TABLE emp20
+-- AS
+-- SELECT * FROM EMP
+-- WHERE deptno = 20;
+
+-- SELECT * FROM EMP10; --3명
+-- SELECT * FROM EMP20; -- 5명
+
+-- -- 합집합 UNION
+-- CREATE TABLE emp_1020
+-- AS
+-- SELECT empno, ename, deptno
+-- FROM EMP10
+-- UNION
+-- SELECT empno, ename, deptno
+-- FROM EMP20;
+
+-- CREATE TABLE emp_clerk
+-- AS SELECT * FROM emp
+-- WHERE job='CLERK';
+
+-- CREATE TABLE emp_maneger
+-- AS SELECT * FROM emp
+-- WHERE job='MANAGER';
+
+-- CREATE TABLE emp_tf
+-- AS
+-- SELECT empno, ename, job
+-- FROM emp_clerk
+-- UNION
+-- SELECT empno, ename, job
+-- FROM emp_maneger;
+
+
+-- --차집합 MINUS
+-- SELECT ename, job
+-- FROM emp -- 14명
+-- MINUS
+-- SELECT ename, job
+-- FROM emp_clerk; -- 4명
+
+-- -- 교집합 INTERSECT
+-- SELECT ename, job
+-- FROM emp -- 14명
+-- INTERSECT
+-- SELECT ename, job
+-- FROM emp_clerk; -- 4명
