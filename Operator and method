@@ -1,0 +1,100 @@
+Rem Date : 2020년 8월 27일
+Rem Author : 김준환
+--Objective : Basic SQL과 Oracle 함수 학습하기
+--Environment : Windows 10, Oracle SQL Developer, Oracle Database 19c Enterprise Ed.
+
+SELECT ename, job
+FROM emp
+-- WHERE job IN('MANAGER', 'ANALYST', 'CLERK');
+WHERE job NOT IN('MANAGER', 'ANALYST', 'CLERK');
+
+
+SELECT empno, ename, sal, mgr
+FROM emp
+WHERE mgr IN(7902, 7566, 7788);
+
+SELECT ename
+FROM emp
+WHERE deptno IN(10,20);
+
+SELECT dname
+FROM dept
+WHERE deptno IN(10,20);
+
+
+-- 1. BETWEEN A AND B
+-- a가 b보다 항상 작아야한다.
+-- 이상,이하이므로 초과,미만은 사용할 수 없다.
+-- NOT을 쓸 때 유리해진다.
+SELECT ename, job, sal
+FROM emp
+--WHERE sal >= 1300 AND sal <= 1500;
+WHERE sal BETWEEN 1300 AND 1500;
+--WHERE sal BETWEEN 1500 AND 1300;
+
+
+
+-- 날짜 형식 다루기
+-- DATE형식은 항상 NLS_DATE_FORMAT 형식에 맞춰야 한다.
+
+-- 현재타입 보기
+SELECT parameter, value FROM NLS_SESSION_PARAMETERS;
+
+-- 2. 날짜형식 바꾸기
+ALTER SESSION
+SET NLS_DATE_FORMAT='YYYY-MM-DD';
+
+SELECT hiredate
+FROM emp
+WHERE deptno = 10;
+
+
+-- 1987년에 입사한 사원의 사번, 이름, 입사날짜를 출력하시오.
+ALTER SESSION
+SET NLS_DATE_FORMAT='YYYY-MM-DD';
+SELECT ename, hiredate
+FROM emp
+-- WHERE hiredate >= '1987-01-01' AND hiredate <= '1987-12-31'; -- 1번째방법
+-- WHERE hiredate BETWEEN '1987-01-01' AND '1987-12-31'; -- 2번째방법
+WHERE hiredate LIKE '1987%'; -- 3번째방법
+
+-- 3. LIKE 연산자, WHILDCARD : %,_
+SELECT ename
+FROM emp
+--WHERE ename LIKE 'S%'; -- = 대신like를 사용한다. 글자수 모를땐 편하게
+WHERE ename LIKE 'S____'; -- '_'가 4개
+
+SELECT ename,job
+FROM emp
+--WHERE job LIKE 'ANA%'; -- '_'가 4개
+--WHERE job LIKE '%ST';
+--WHERE job LIKE 'A%ST'; -- %의 위치는 어디던 가능하다.
+--WHERE job LIKE '%S%';
+WHERE job LIKE '_L%';
+
+
+-- zipcode table 추가했다.
+SELECT COUNT(*) FROM zipcode;
+
+DESC zipcode;
+
+SELECT *
+FROM zipcode
+--WHERE dong = '역삼동';
+WHERE dong LIKE '%개포%';
+
+
+
+-- SELECT  *
+-- FROM    emp
+-- WHERE   comm IS NOT NULL;
+
+
+-- SELECT  *
+-- FROM    emp
+-- WHERE   mgr IS NULL;
+
+
+-- SELECT *
+-- FROM    emp
+-- ORDER BY comm DESC ;
