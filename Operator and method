@@ -255,3 +255,31 @@ WHERE SUBSTR(ename,1,1) BETWEEN 'B' AND 'J';
 SELECT ename, LENGTH(ename), UPPER(ename), SUBSTR(ename, 1, 3), INSTR(ename, 'A')
 FROM emp
 WHERE deptno = 20;
+
+-- CONCAT() : 두문자열 합치는 함수
+SELECT *
+FROM zipcode
+-- WHERE dong LIKE '%개포%';
+-- WHERE dong LIKE CONCAT(CONCAT('%', '개포'); -- 개포로 끝나는게 없어서 결과 아무것도 안나옴
+WHERE dong LIKE CONCAT(CONCAT('%', '개포'), '%');
+
+-- TRIM
+SELECT 'aaHelloaa', LTRIM('aaHelloaa', 'a'), RTRIM('aaHelloaa', 'a')
+-- SELECT TRIM(BOTH 'a' FROM 'aaHelloaa')
+-- SELECT TRIM(LEADING 'a' FROM 'aaHelloaa')
+-- SELECT TRIM(TRAILING 'a' FROM 'aaHelloaa')
+FROM dual;
+
+-- CHR(10) : 줄바꿈 아스키코드 = 10
+--f5로 실행
+SELECT  'Hello' || ', World' || CHR(10) || CHR(36) || 'Oralce Programing'
+FROM dual;
+-- CHR 숫자에 맞는 ASCII문자 출력
+-- ASCII 해당 ASCII로 변환
+
+
+-- GREATEST 주어진 단어 중 가장 높은 값
+-- LEAST 가장 낮은 값
+SELECT GREATEST('한지민', '김지민'), LEAST('한지민', '김지민')
+FROM dual;
+-- 글씨도 크다, 작다가 가능하다.
