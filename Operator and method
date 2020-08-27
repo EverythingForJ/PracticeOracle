@@ -200,3 +200,58 @@ FROM emp
 WHERE comm IS NULL;
 
 -- 실습 끝
+
+-- 단일 행 함수 다루기
+-- 1. 문자 함수 다루기
+
+SELECT *
+FROM emp
+--WHERE job = UPPER('salesman');
+WHERE LOWER('JOB') = 'SALESMAN';
+
+SELECT UPPER('hello, world'), LOWER('hello, world'), INITCAP('hello, world')
+FROM dual;
+
+--SELECT LOWER(ename)
+SELECT INITCAP(ename)
+FROM emp
+WHERE job='SALESMAN';
+
+-- length는 바이트수가 아닌 글자의 개수, LENGTHB는 바이트수
+-- SELECT LENGTH('scott'),LENGTH('안녕하세요')
+SELECT LENGTHB('scott'),LENGTHB('안녕하세요')
+FROM dual;
+
+SELECT parameter, value
+FROM NLS_SESSION_PARAMETERS;
+
+SELECT ename
+FROM emp
+WHERE LENGTH(ename) > 5;
+
+-- SUBSTR() 인덱스가 아닌 1번째글자부터 3번째글자까지 출력
+-- SELECT job, SUBSTR(job, 1,3)
+SELECT job, SUBSTR(job, 3) -- 3번째부터 끝까지
+FROM emp;
+
+-- 1987년에 입사한 사원의 사번, 이름, 입사날짜를 출력하시오.
+ALTER SESSION
+SET NLS_DATE_FORMAT='YYYY-MM-DD';
+
+SELECT ename, hiredate
+FROM emp
+-- WHERE hiredate >= '1987-01-01' AND hiredate <= '1987-12-31'; -- 1번째방법
+-- WHERE hiredate BETWEEN '1987-01-01' AND '1987-12-31'; -- 2번째방법
+-- WHERE hiredate LIKE '1987%'; -- 3번째방법
+WHERE SUBSTR(hiredate, 1, 4) = 1987; -- 4번째 방법
+
+
+--이름이 B와 J사이의 모든 사원 정보 출력
+SELECT *
+FROM emp
+WHERE SUBSTR(ename,1,1) BETWEEN 'B' AND 'J';
+
+-- INSTR 지정된 문자열의 위치를 숫자로 반환
+SELECT ename, LENGTH(ename), UPPER(ename), SUBSTR(ename, 1, 3), INSTR(ename, 'A')
+FROM emp
+WHERE deptno = 20;
