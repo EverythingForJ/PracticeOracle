@@ -1,0 +1,92 @@
+Rem Date : 2020년 8월 28일
+Rem Author : 김준환
+--Objective : Basic SQL과 Oracle 함수 학습하기
+--Environment : Windows 10, Oracle SQL Developer, Oracle Database 19c Enterprise Ed.
+
+REM 숫자 함수
+--1. round() 반올림
+SELECT ROUND(45.925, 2), ROUND(45.925, 0), ROUND(45.925, -1)
+FROM dual;
+
+SELECT sal, ROUND((sal/12),0) AS day, ROUND((sal/12/5),0) AS TMIE
+FROM emp
+WHERE deptno=20;
+
+--2. TRUNC() 숫자 버림
+SELECT TRUNC(45.925, 2), TRUNC(45.925, 0), TRUNC(45.925, -1)
+FROM dual;
+
+--3. CEIL(),FLOOR() 그 숫자의 가까운 가장 큰 정수와 가장 작은 정수
+SELECT ROUND(45.925), TRUNC(45.925), CEIL(45.925), FLOOR(45.925)
+FROM dual;
+SELECT ROUND(-45.925), TRUNC(-45.925), CEIL(-45.925), FLOOR(-45.925)
+FROM dual;
+
+--4. MOD() 나머지값 %
+SELECT 15/6, MOD(15, 6), MOD(10, 2), MOD(11, 2)
+FROM dual;
+
+--5. NVL2() null일때와 아닐 때를 값을 다르게 처리한다.
+SELECT deptno, comm, NVL(comm, 0), NVL2(comm, comm*1.1, 0), NULLIF(comm, NULL)
+FROM emp
+WHERE deptno IN(10,30)
+ORDER BY deptno;
+
+-- 6. NULLIF() 스미스가 월급이 800과 같으면 NULL
+SELECT NULLIF(sal, 800)
+FROM emp
+WHERE ename = UPPER('smith');
+
+-- 7. COALESCE() null이면 comm, 아니면 sal을 찍기
+SELECT comm, sal, COALESCE(comm, sal)
+FROM emp
+WHERE deptno IN(10,30);
+
+SELECT deptno, comm, COALESCE(comm, 100)
+FROM emp
+WHERE deptno IN(10,30)
+ORDER BY deptno ASC;
+
+--8. DECODE - If문과 같음
+SELECT deptno, sal, DECODE(deptno, 10, sal*1.1, 20, sal*1.5, sal) AS "보너스"
+FROM emp
+ORDER  BY deptno ASC;
+
+SELECT job, sal, DECODE(job, 'MANAGER', sal*0.3, 'ANALYST', sal*0.1, 'CLERK', sal*0.1, 200) AS "보너스"
+FROM emp
+ORDER  BY sal DESC;
+
+SELECT ename, CONCAT('19', TO_CHAR(hiredate, 'RR')) AS "입사년도",
+                DECODE(TO_CHAR(hiredate, 'RR'), '80', '이사', hiredate, '81', '부장', hiredate, '82', '과장', '사원') AS "직급"
+FROM emp
+ORDER BY "입사년도";
+
+--10. CASE - DECODE 퍼포먼스 향상문
+SELECT deptno, sal, 
+    CASE 
+        WHEN deptno = 10 THEN sal*0.1
+        WHEN deptno = 20 THEN sal*0.5
+        ELSE sal
+    END AS "보너스"
+FROM emp
+ORDER  BY deptno ASC;
+
+SELECT job, sal, CASE WHEN job = 'MANAGER' THEN sal*0.3
+                      WHEN job = 'ANALYST' THEN sal*0.1
+                      ELSE sal*0.1 END AS "보너스"
+FROM emp
+ORDER  BY sal DESC;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD';
+
+SELECT ename, TO_CHAR(hiredate, 'YYYY') AS "입사년도",
+              CASE
+              WHEN TO_CHAR(hiredate, 'YYYY') = '1980' THEN '이사'
+              WHEN TO_CHAR(hiredate, 'YYYY') = '1981' THEN '부장'
+              WHEN TO_CHAR(hiredate, 'YYYY') = '1982' THEN '과장'
+              ELSE '사원'
+              END AS "직급"
+FROM emp
+ORDER BY "입사년도";
+
+
