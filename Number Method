@@ -89,4 +89,29 @@ SELECT ename, TO_CHAR(hiredate, 'YYYY') AS "입사년도",
 FROM emp
 ORDER BY "입사년도";
 
+-- 날짜형 함수
+-- 더하기빼기가 되는 날짜
+SELECT ename, hiredate, TRUNC(sysdate-hiredate)AS "근무 일수", TRUNC((sysdate-hiredate)/365)AS "근무 년수"
+FROM emp
+WHERE deptno = 10;
 
+-- 도서관 책 반납할 때
+SELECT sysdate + 5
+FROM dual;
+
+SELECT TRUNC(MONTHS_BETWEEN(SYSDATE, HIREDATE)) || '개월째 근무' -- 개월차 계산
+FROM emp
+WHERE deptno = 10;
+
+SELECT ADD_MONTHS(sysdate, 5) -- N개월 뒤
+FROM dual;
+
+SELECT NEXT_DAY(NEXT_DAY(sysdate, '월요일'), '월요일') -- 다다음주 월요일
+FROM dual;
+
+--SELECT LAST_DAY(sysdate)
+SELECT LAST_DAY(ADD_MONTHS(sysdate, 1))
+FROM dual;
+
+SELECT ROUND(ADD_MONTHS(sysdate, -3),'YEAR'), TRUNC(sysdate,'YEAR'), ROUND(sysdate,'YEAR')
+FROM dual;
