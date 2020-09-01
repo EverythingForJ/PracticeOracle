@@ -66,7 +66,7 @@ WHERE ename LIKE 'S____'; -- '_'가 4개
 
 SELECT ename,job
 FROM emp
---WHERE job LIKE 'ANA%'; -- '_'가 4개
+--WHERE job LIKE 'ANA%';
 --WHERE job LIKE '%ST';
 --WHERE job LIKE 'A%ST'; -- %의 위치는 어디던 가능하다.
 --WHERE job LIKE '%S%';
