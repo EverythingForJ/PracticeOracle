@@ -1,0 +1,41 @@
+-- 125p 1.
+SELECT *
+FROM emp
+WHERE ename LIKE '%S';
+
+-- 2.
+SELECT empno, ename, job, sal, deptno
+FROM emp
+WHERE deptno=30 and job = 'SALESMAN';
+
+-- 3. 
+SELECT empno, ename, sal, deptno
+FROM emp
+WHERE deptno IN (20,30) AND sal>2000;
+
+SELECT empno, ename, sal, deptno
+FROM emp
+WHERE deptno IN (20,30)
+INTERSECT
+SELECT empno, ename, sal, deptno
+FROM emp
+WHERE sal>2000;
+
+-- 126p 4.
+SELECT *
+FROM emp
+WHERE NOT (sal>=2000 AND sal<=3000);
+
+-- 5.
+SELECT ename, empno, sal, deptno
+FROM emp
+WHERE ename LIKE '%E%' AND deptno=30 AND sal NOT BETWEEN 1000 AND 2000;
+
+--6. 
+SELECT *
+FROM emp
+WHERE comm IS NULL AND mgr IS NOT NULL AND job IN ('MANAGER','CLERK')
+INTERSECT
+SELECT *
+FROM emp
+WHERE ename NOT LIKE '_L%';
