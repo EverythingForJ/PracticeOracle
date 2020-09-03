@@ -39,3 +39,36 @@ INTERSECT
 SELECT *
 FROM emp
 WHERE ename NOT LIKE '_L%';
+
+rem 단일행 함수 (single-row function)
+
+-- 문자 데이터를 가공하는 문자 함수
+
+SELECT *
+FROM emp
+WHERE UPPER(ename) LIKE UPPER('%scott%');
+
+SELECT *
+FROM emp
+WHERE LOWER(ename) LIKE LOWER('%scott%');
+
+SELECT *
+FROM emp
+WHERE INITCAP(ename) LIKE INITCAP('%scott%');
+
+SELECT ename, LENGTH(ename)
+FROM emp
+WHERE LENGTHB(ename)>=5;
+
+SELECT LENGTH('한글'), LENGTHB('한글')
+FROM dual;
+
+SELECT ename, SUBSTR(ename, 2), SUBSTR(ename, 3, 2), SUBSTR(ename, -LENGTH(ename), 2), SUBSTR(ename, -4)
+FROM emp;
+
+SELECT INSTR('HELLO', 'L'), INSTR('HELLO', 'L', 4), INSTR('HELLO LL', 'L', 3, 2)
+FROM dual;
+
+SELECT REPLACE('01023826130', '0', '9'), REPLACE('01023826130', '0')
+FROM dual;
+
