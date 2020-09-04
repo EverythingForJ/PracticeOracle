@@ -87,6 +87,7 @@ FROM emp
 -- WHERE hiredate BETWEEN '87/01/01' AND '87/12/31';
 WHERE SUBSTR(hiredate, 1, 2) = '87';
 
+
 REM 명시적 형변환
 
 SELECT TO_CHAR(sysdate, 'YYYY-MM-DD DAY HH24-MI-SS') AS 현재날짜시간, TO_CHAR(sysdate, 'DY'), TO_CHAR(sysdate, 'DAY', 'NLS_DATE_LANGUAGE=JAPANESE')
@@ -102,3 +103,30 @@ SELECT *
 FROM emp
 WHERE hiredate > TO_DATE('810601', 'RR/MM/DD');
 
+rem NULL처리 함수
+
+SELECT ename, sal, comm, NVL(comm, 300), NVL2(comm, 300, 10), NVL2(comm, sal*12+comm, sal*12)
+FROM emp;
+
+-- IF
+-- DECODE
+SELECT ename, job, sal, DECODE(job, 'MANAGER', sal*1.1,
+                                    'SALESMAN', sal*1.05,
+                                    'ANALYST', sal,
+                                    sal*1.03)
+FROM emp;
+
+SELECT ename, job, sal, CASE job
+                            WHEN 'MANAGER' THEN sal*1.1
+                            WHEN 'SALESMAN' THEN sal*1.05
+                            WHEN 'ANALYST' THEN sal
+                            ELSE sal*1.03
+                            END AS case
+FROM emp;
+
+SELECT ename, job, sal, CASE
+                            WHEN comm IS NULL THEN '0'
+                            WHEN comm > 0 THEN '있다'
+                            ELSE 'comm이 0'
+                            END AS CASE2
+FROM emp;
