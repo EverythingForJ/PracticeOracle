@@ -130,3 +130,4 @@ SELECT ename, job, sal, CASE
                             ELSE 'comm이 0'
                             END AS CASE2
 FROM emp;
+
