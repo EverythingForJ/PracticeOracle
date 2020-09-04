@@ -50,3 +50,55 @@ SELECT '[' || TRIM('  _ _ ORACLE _ _  ') || ']' AS TRIM,
 '[' || LTRIM('  _ _ ORACLE _ _  ', ' O L _') || ']' AS LTRIM2,
 '[' || RTRIM('_ _ ORACLE _ _', '_ E _') || ']' AS RTRIM
 FROM dual;
+
+-- 숫자 함수
+
+SELECT ROUND(1234.5678, 2), TRUNC(1234.5678, 2), ROUND(1255.5678, -2), TRUNC(1234.8901), ROUND(1255.5028, 2)
+FROM dual;
+
+SELECT CEIL(15.945), FLOOR(15.945), CEIL(-15.945), FLOOR(-15.945), MOD(11, 3)
+FROM dual;
+
+-- 날짜 함수
+
+
+SELECT sysdate
+FROM dual;
+
+SELECT TRUNC(sysdate-hiredate), hiredate, hiredate-2, hiredate+10
+FROM emp
+WHERE hiredate LIKE '81%';
+
+SELECT hiredate, ADD_MONTHS(hiredate, 1) AS NextMonth, MONTHS_BETWEEN(hiredate, '01/12/25'), TRUNC(MONTHS_BETWEEN(sysdate, hiredate))
+FROM emp;
+
+SELECT NEXT_DAY(sysdate, '토'), LAST_DAY('20/02/21')
+FROM dual;
+
+SELECT parameter, value FROM NLS_SESSION_PARAMETERS;
+
+ALTER SESSION
+SET NLS_DATE_FORMAT='YYYY-MM-DD';
+
+-- 1987년에 입사한 사원의 사번, 이름, 입사날짜를 출력하시오.
+SELECT empno, ename, hiredate
+FROM emp
+-- WHERE hiredate LIKE '87%';
+-- WHERE hiredate BETWEEN '87/01/01' AND '87/12/31';
+WHERE SUBSTR(hiredate, 1, 2) = '87';
+
+REM 명시적 형변환
+
+SELECT TO_CHAR(sysdate, 'YYYY-MM-DD DAY HH24-MI-SS') AS 현재날짜시간, TO_CHAR(sysdate, 'DY'), TO_CHAR(sysdate, 'DAY', 'NLS_DATE_LANGUAGE=JAPANESE')
+FROM dual;
+
+SELECT TO_NUMBER('1,300', '999,999') - TO_NUMBER('1,200', '999,999')
+FROM dual;
+
+SELECT TO_DATE('190126', 'YY/MM/DD')
+FROM dual;
+
+SELECT *
+FROM emp
+WHERE hiredate > TO_DATE('810601', 'RR/MM/DD');
+
