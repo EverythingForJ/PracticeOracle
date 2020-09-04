@@ -31,7 +31,7 @@ SELECT ename, empno, sal, deptno
 FROM emp
 WHERE ename LIKE '%E%' AND deptno=30 AND sal NOT BETWEEN 1000 AND 2000;
 
---6. 
+-- 6. 
 SELECT *
 FROM emp
 WHERE comm IS NULL AND mgr IS NOT NULL AND job IN ('MANAGER','CLERK')
@@ -39,3 +39,32 @@ INTERSECT
 SELECT *
 FROM emp
 WHERE ename NOT LIKE '_L%';
+
+-----------------------------------------------------------------------------
+
+-- 174p. 1.
+SELECT empno, RPAD(SUBSTR(empno, 1, 2), LENGTH(empno), '*') AS MASKING_EMPNO, ename, RPAD(SUBSTR(ename,1,1), LENGTH(ENAME), '*') AS MASKING_ENAME
+FROM emp
+WHERE LENGTH(ename)=5;
+
+-- 2.
+SELECT empno, ename, sal, TRUNC(sal / 21.5, 2) AS DAY_PAY, ROUND(sal / 21.5 / 8, 1) AS TIME_PAY
+FROM emp;
+
+-- 175p. 3.
+ALTER SESSION
+SET NLS_DATE_FORMAT = 'YYYY-MM-DD';
+
+SELECT empno, ename, hiredate, TO_CHAR(NEXT_DAY(ADD_MONTHS(hiredate, 3), '월요일'), 'YYYY-MM-DD') AS R_JOB, NVL(TO_CHAR(comm), 'N/A') AS comm
+FROM emp;
+
+-- 4.
+SELECT empno, ename, mgr, CASE
+                             WHEN mgr IS NULL THEN '0000'
+                             WHEN mgr LIKE '75%' THEN '5555'
+                             WHEN SUBSTR(mgr,1,2) = '76' THEN '6666'
+                             WHEN mgr LIKE '77%' THEN '7777'
+                             WHEN mgr LIKE '78%' THEN '8888'           
+                             ELSE TO_CHAR(mgr)
+                             END AS CHG_MGR
+FROM emp;
