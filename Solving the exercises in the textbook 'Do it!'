@@ -72,3 +72,22 @@ FROM dual;
 SELECT REPLACE('01023826130', '0', '9'), REPLACE('01023826130', '0')
 FROM dual;
 
+SELECT LPAD(ename, 10), RPAD(empno, 10, 0), LPAD(ename, 10, 'AB') AS AB, RPAD('930126-', 14, '*') AS 주민번호
+FROM emp;
+
+-- 함수 CONCAT() = 연산자 ||
+
+SELECT CONCAT('Name : ', ename) AS NAME, CONCAT('N0.1 : ', CONCAT(ename, ' is Best')) AS BEST
+FROM emp;
+
+SELECT 'Name : ' || ename AS NAME, 'N0.1 : ' || ename || ' is Best' AS BEST
+FROM emp;
+
+SELECT '[' || TRIM('  _ _ ORACLE _ _  ') || ']' AS TRIM,
+'[' || TRIM(LEADING FROM '  _ _ ORACLE _ _  ') || ']' AS TRIM1, 
+'[' || TRIM(TRAILING '_' FROM '_ _ ORACLE _ _') || ']' AS TRIM2, 
+'[' || TRIM(BOTH '_' FROM '_ _ ORACLE _ _') || ']' AS TRIM3,
+'[' || LTRIM('  _ _ ORACLE _ _  ') || ']' AS LTRIM, 
+'[' || LTRIM('  _ _ ORACLE _ _  ', ' O L _') || ']' AS LTRIM2,
+'[' || RTRIM('_ _ ORACLE _ _', '_ E _') || ']' AS RTRIM
+FROM dual;
