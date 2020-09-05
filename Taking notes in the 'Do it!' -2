@@ -15,3 +15,8 @@ SELECT COUNT(comm) -- COUNT에서 NULL데이터는 반환개수에서 제외된�
 FROM emp;
 -- WHERE comm IS NOT NULL;
 
+SELECT MAX(hiredate), MIN(hiredate)
+FROM emp;
+
+SELECT AVG(comm) -- NULL은 자동으로 제외
+FROM emp;
