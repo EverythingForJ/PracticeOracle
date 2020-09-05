@@ -20,3 +20,37 @@ FROM emp;
 
 SELECT AVG(comm) -- NULL은 자동으로 제외
 FROM emp;
+
+-- GROUP BY
+SELECT TRUNC(AVG(sal)), deptno
+FROM emp
+GROUP BY deptno
+ORDER BY deptno DESC;
+
+SELECT deptno, job, TRUNC(AVG(sal)) AS AVG
+FROM emp
+GROUP BY deptno, job
+ORDER BY deptno DESC, AVG DESC;
+
+-- HAVING
+SELECT deptno, job, TRUNC(AVG(sal)) AS AVG
+FROM emp
+-- WHERE AVG(sal) >2000  다중행함수 사용불가
+WHERE sal <= 3000
+GROUP BY deptno, job
+HAVING AVG(sal) >= 2000
+ORDER BY deptno ASC, job DESC;
+
+-- CUBE,ROLLUP
+SELECT deptno, job, COUNT(*), MAX(sal), MIN(sal), SUM(sal), ROUND(AVG(sal))
+FROM emp
+GROUP BY CUBE(deptno), job -- 반대로??
+-- GROUP BY CUBE(deptno, job)
+-- GROUP BY ROLLUP(deptno, job)
+-- GROUP BY deptno, job
+ORDER BY deptno ASC, job;
+
+-- GROUPING SETS
+SELECT deptno, job, COUNT(*)
+FROM emp
+GROUP BY GROUPING SETS(job, deptno);
