@@ -1,0 +1,17 @@
+REM 다중행 함수(Multiple-row function)
+
+SELECT MIN(sal), MAX(sal), SUM(sal), ROUND(AVG(sal)), COUNT(sal)
+FROM emp
+WHERE job = 'MANAGER';
+
+SELECT SUM(DISTINCT sal), SUM(ALL sal), SUM(sal) -- 기본 all
+FROM emp;
+
+SELECT COUNT(*), COUNT(DISTINCT sal), COUNT(ALL sal), COUNT(sal)
+FROM emp
+WHERE comm IS NULL;
+
+SELECT COUNT(comm) -- COUNT에서 NULL데이터는 반환개수에서 제외된다.
+FROM emp;
+-- WHERE comm IS NOT NULL;
+
