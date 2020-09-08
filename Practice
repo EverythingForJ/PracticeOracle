@@ -162,3 +162,83 @@ WHERE job != 'MANAGER';
 SELECT *
 FROM emp
 ORDER BY deptno, sal DESC;
+
+-----------------------------------------------------------------------------------------------------------
+
+Rem Date : 2020년 9월 8일
+Rem Author : 김준환
+--Objective : 과제
+--Environment : Windows 10, Oracle SQL Developer, Oracle Database 19c Enterprise Ed.
+
+REM 1. 사원 테이블(employees)에서 입사일이 1998년에 입사한 사원의 이름, 월급, 부서번호를 출력하는 4가지 방법 모두를 작성하시오.
+ALTER SESSION
+SET NLS_DATE_FORMAT='YYYY-MM-DD';
+
+SELECT first_name, last_name, salary, department_id, hire_date
+FROM employees
+-- WHERE hire_date LIKE '1998%';
+-- WHERE hire_date BETWEEN '1998-01-01' AND '1998-12-31';
+-- WHERE SUBSTR(hire_date, 1, 4) = '1998'; 
+WHERE hire_date >= '1998-01-01' AND hire_date <= '1998-12-31';
+
+
+REM 2. 사원 테이블(employees)에서 이름(first_name)이 John 또는 Peter인 사원의 사번, 이름, 관리자 사원번호, 부서번호, 월급을 출력하시오.
+SELECT employee_id, first_name, manager_id, department_id, salary
+FROM employees
+WHERE first_name IN('John', 'Peter');
+
+
+REM 3. 사원 테이블(employees)에서 보너스를 받는 사원의 사번, 이름, 봉급, 보너스 비율(commission_pct)을 출력하되 보너스 비율 내림차순으로 출력하시오.
+SELECT employee_id, first_name, salary, commission_pct
+FROM employees
+WHERE commission_pct IS NOT NULL
+ORDER BY commission_pct DESC;
+
+
+REM 4. 위의 3번 문제를 이용해서 사원 테이블에서 보너스를 받는 사원들만 출력하되, 사원의 이름, 봉급, 보너스(봉금에서 보너스 비율을 계산하여), 
+-- 연봉(월급 x 12 + 보너스)을 출력하시오. 단, 연봉은 내림차순으로 출력하고 각 컬럼은 다음 그림과 같이 한글로 출력하시오.
+SELECT employee_id AS "사원 번호", first_name AS "사원의 이름", salary AS 봉급, commission_pct*salary AS 보너스, (salary*12+commission_pct*salary) AS 연봉
+FROM employees
+WHERE commission_pct IS NOT NULL
+ORDER BY 연봉 DESC;
+
+
+REM 5. 부서 위치 테이블(locations)에서 부서가 위치한 나라가 미국(US)과 영국(UK)에 위치한 부서의 모든 정보를 출력하시오.
+SELECT *
+FROM locations
+WHERE country_id IN ('US','UK');
+
+
+REM 6. 부서 위치 테이블(locations)에 보면, 이 회사는 지사가 모두 몇 개의 나라에 위치하는가?
+SELECT DISTINCT(country_id)
+FROM locations;
+
+
+REM 7. 사원 테이블(employees)에서 부서번호가 30번과 40번에 소속돼있는 사원의 사원번호, 사원의 이름(이름:first_name, 성:last_name을 합칠 것),
+-- 전화번호, Email 주소, 부서번호를 한글 칼럼으로 출력하시오.
+SELECT employee_id AS "사원 번호", first_name || ' ' ||last_name AS "사원의 이름", 
+        phone_number AS 전화번호, email AS "Email 주소", department_id AS 부서번호
+FROM employees
+WHERE department_id IN(30,40);
+
+
+REM 8. 사원 테이블(employees)에서 이름(first_name)에 S가 들어있는(대소문자 구별 안함) 모든 사원의 이름(모두 32명)을 출력하시오.
+SELECT first_name
+FROM employees
+WHERE LOWER(first_name) LIKE '%s%';
+
+
+REM 9. 월급을 가장 많이 받는 사원의 이름을 사원 테이블(employees)에서 사원의 이름과 월급을 출력하시오.
+SELECT first_name, salary
+FROM employees
+ORDER BY salary DESC;
+
+
+REM 10. 사원 테이블(employees)에서 입사 후 60일이 지난 첫 월요일의 날짜를 출력하되, 부서번호가 30번과 40번에 소속되어 있는 사원의 이름, 
+-- 입사일, 입사 후 60일이 지난 월요일 날짜, 부서번호를 한글로 출력하시오.
+SELECT first_name AS "사원의 이름", hire_date AS 입사일, NEXT_DAY(hire_date+60,'월요일') AS "입사 후 60일이 지난 첫 월요일 날짜", department_id AS 부서번호
+FROM employees
+WHERE department_id IN(30,40);
+
+
+
