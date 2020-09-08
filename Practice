@@ -169,6 +169,7 @@ Rem Date : 2020년 9월 8일
 Rem Author : 김준환
 --Objective : 과제
 --Environment : Windows 10, Oracle SQL Developer, Oracle Database 19c Enterprise Ed.
+--Ref hrsist
 
 REM 1. 사원 테이블(employees)에서 입사일이 1998년에 입사한 사원의 이름, 월급, 부서번호를 출력하는 4가지 방법 모두를 작성하시오.
 ALTER SESSION
@@ -240,5 +241,5 @@ SELECT first_name AS "사원의 이름", hire_date AS 입사일, NEXT_DAY(hire_d
 FROM employees
 WHERE department_id IN(30,40);
 
-
+-------------------------------------------------------------------------------------------------
 
