@@ -2,6 +2,7 @@ Rem Date : 2020년 8월 31일
 Rem Author : 김준환
 --Objective : 과제
 --Environment : Windows 10, Oracle SQL Developer, Oracle Database 19c Enterprise Ed.
+--Ref scott 
 
 -- 1. 모든 사원에 대해 사번, 이름, 급여, 보너스(comm), 보너스금액을 출력하는데 각각 열이름을 한글로 출력하게
 -- 하는 SQL문을 작성하시오. 단 보너스금액은 실급여(급여와 보너스의 합)에 10%를 더해서 출력합니다.
