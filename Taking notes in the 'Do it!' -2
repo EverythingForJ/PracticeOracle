@@ -54,3 +54,22 @@ ORDER BY deptno ASC, job;
 SELECT deptno, job, COUNT(*)
 FROM emp
 GROUP BY GROUPING SETS(job, deptno);
+
+SELECT deptno, job, count(*)
+FROM emp
+GROUP BY GROUPING SETS(deptno, job)
+ORDER BY deptno, job;
+
+-- LISTAGG() WITHIN GROUP() -- 가로로 나열
+SELECT deptno,LISTAGG(ename, ', ') WITHIN GROUP(ORDER BY sal DESC) AS NAMES
+FROM emp
+GROUP BY deptno;
+
+-- PIVOT
+SELECT *
+FROM (SELECT deptno, job, sal
+        FROM emp)
+PIVOT (MAX(sal) FOR deptno IN(10,20,30))
+ORDER BY JOB;
+
+
