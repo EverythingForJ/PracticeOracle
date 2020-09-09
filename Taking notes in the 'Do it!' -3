@@ -45,3 +45,9 @@ FROM emp e1, emp e2
 WHERE e1.mgr(+) = e2.empno
 ORDER BY e1.empno;
 
+-- SQL-99 OUTER JOIN
+-- FULL OUTER JOIN
+SELECT e1.empno, e1.ename, e1.mgr, e2.empno AS mgr_empno, e2.ename AS mgr_ename
+FROM emp e1 FULL OUTER JOIN emp e2 ON (e1.mgr = e2.empno)
+ORDER BY e1.empno;
+
