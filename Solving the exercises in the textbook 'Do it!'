@@ -68,3 +68,50 @@ SELECT empno, ename, mgr, CASE
                              ELSE TO_CHAR(mgr)
                              END AS CHG_MGR
 FROM emp;
+
+---------------------------------------------------------------------------------------------------------------
+
+-- 239p 1.
+-- SQL-99 이전 방식
+SELECT D.deptno, D.dname, E.empno, E.ename, E.sal
+FROM emp E, dept D
+WHERE E.deptno=D.deptno AND E.sal>2000;
+-- SQL-99방식
+SELECT deptno, D.dname, E.empno, E.ename, E.sal
+FROM emp E JOIN dept D USING(deptno)
+WHERE E.sal>2000;
+
+-- 2.
+-- SQL-99 이전 방식
+SELECT D.deptno,D.dname, TRUNC(AVG(E.sal)) AS AVG_SAL, MAX(E.sal) AS MAX_SAL, MIN(E.sal) AS MIN_SAL, COUNT(*) AS CNT
+FROM dept D, emp E
+WHERE E.deptno=D.deptno
+GROUP BY D.deptno, D.dname
+ORDER BY D.deptno;
+-- SQL-99방식
+SELECT D.deptno, D.dname, TRUNC(AVG(E.sal)) AS AVG_SAL, MAX(E.sal) AS MAX_SAL, MIN(E.sal) AS MIN_SAL, COUNT(*) AS CNT
+FROM dept D JOIN emp E ON(E.deptno=D.deptno)
+GROUP BY D.deptno, D.dname
+ORDER BY D.deptno;
+
+-- 3.
+-- SQL-99 이전 방식
+SELECT D.deptno, D.dname, E.empno, E.ename, E.job, E.sal
+FROM emp E, dept D
+WHERE E.deptno(+)=D.deptno
+ORDER BY D.deptno, E.ename;
+-- SQL-99방식
+SELECT D.deptno, D.dname, E.empno, E.ename, E.job, E.sal
+FROM emp E RIGHT OUTER JOIN dept D ON(E.deptno=D.deptno)
+ORDER BY D.deptno, E.ename;
+
+-- 240p 4.
+-- SQL-99 이전 방식
+SELECT D.deptno, D.dname, E.empno, E.ename, E.mgr, E.sal, E.deptno, S.losal, S.hisal, S.grade, E2.empno AS MGR_EMPNO, E2.ename AS MGR_ENAME
+FROM emp E, dept D, salgrade S, emp E2
+WHERE D.deptno = E.deptno(+) AND E.sal BETWEEN S.losal(+) AND S.hisal(+) AND E.mgr=E2.empno(+)
+ORDER BY D.deptno, E.empno;
+-- SQL-99방식
+SELECT D.deptno, D.dname, E.empno, E.ename, E.mgr, E.sal, E.deptno, S.losal, S.hisal, S.grade, E2.empno AS MGR_EMPNO, E2.ename AS MGR_ENAME
+FROM emp E RIGHT OUTER JOIN dept D ON(D.deptno = E.deptno) LEFT OUTER JOIN salgrade S ON (E.sal BETWEEN S.losal AND S.hisal) LEFT OUTER JOIN emp E2 ON(E.mgr=E2.empno)
+ORDER BY D.deptno, E.empno;
