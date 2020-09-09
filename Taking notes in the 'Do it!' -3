@@ -31,3 +31,17 @@ WHERE E.sal BETWEEN S.losal AND S.hisal;
 SELECT *
 FROM emp E, emp C
 WHERE E.mgr=C.empno;
+
+-- 외부 조인 ( 조인 기준의 열의 어느 한쪽이 NULL 이더더라도 강제 출력 ) = 아우터 조인
+-- 좌우를 따로 나누어 지정(WHERE (+))
+-- 왼쪽 외부 조인
+SELECT e1.empno, e1.ename, e1.mgr, e2.empno AS mgr_empno, e2.ename AS mgr_ename
+FROM emp e1, emp e2
+WHERE e1.mgr = e2.empno(+) -- 왼쪽열을 기준으로 오른쪽 열의 데이터 존재 여부에 상관없이 출력
+ORDER BY e1.empno;
+-- 오른쪽 외부 조인
+SELECT e1.empno, e1.ename, e1.mgr, e2.empno AS mgr_empno, e2.ename AS mgr_ename
+FROM emp e1, emp e2
+WHERE e1.mgr(+) = e2.empno
+ORDER BY e1.empno;
+
