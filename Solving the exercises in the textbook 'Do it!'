@@ -115,3 +115,35 @@ ORDER BY D.deptno, E.empno;
 SELECT D.deptno, D.dname, E.empno, E.ename, E.mgr, E.sal, E.deptno, S.losal, S.hisal, S.grade, E2.empno AS MGR_EMPNO, E2.ename AS MGR_ENAME
 FROM emp E RIGHT OUTER JOIN dept D ON(D.deptno = E.deptno) LEFT OUTER JOIN salgrade S ON (E.sal BETWEEN S.losal AND S.hisal) LEFT OUTER JOIN emp E2 ON(E.mgr=E2.empno)
 ORDER BY D.deptno, E.empno;
+
+--------------------------------------------------------------------------------------------------------------
+
+-- 262p 1.
+SELECT E.job, E.empno, E.ename, E.sal, D.deptno, D.dname
+FROM emp E, dept D
+WHERE E.deptno = D.deptno AND job = (SELECT job FROM emp WHERE ename = 'ALLEN');
+
+-- 2.
+SELECT E.empno, E.ename, D.dname, E.hiredate, D.loc, E.sal, S.grade
+FROM emp E, dept D, salgrade S
+WHERE E.deptno = D.deptno AND sal BETWEEN S.losal AND S.hisal AND sal > (SELECT AVG(sal) FROM emp)
+ORDER BY E.sal DESC, e.empno ASC;
+
+-- 263p 3.
+SELECT E.empno, E.ename, E.job, D.deptno, D.dname, D.loc
+FROM emp E, dept D
+WHERE E.deptno = D.deptno AND E.deptno = 10 AND job NOT IN (SELECT job FROM emp WHERE deptno=30);
+
+-- 4.
+-- 다중행 함수 사용하지 않는 방법
+SELECT E.empno, E.ename, E.sal, S.grade
+FROM emp E, salgrade S
+WHERE E.sal BETWEEN S.losal AND S.hisal AND E.sal > (SELECT MAX(sal) FROM emp WHERE job='SALESMAN')
+ORDER BY E.empno ASC;
+
+--다중행 함수 사용하는 방법
+SELECT E.empno, E.ename, E.sal, S.grade
+FROM emp E, salgrade S
+WHERE E.sal BETWEEN S.losal AND S.hisal AND E.sal > ALL (SELECT sal FROM emp WHERE job='SALESMAN')
+ORDER BY E.empno ASC;
+
