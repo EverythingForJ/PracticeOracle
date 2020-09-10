@@ -99,3 +99,14 @@ FROM emp
 WHERE sal > SOME (SELECT sal FROM emp WHERE deptno=30) -- WHERE sal > (SELECT MIN(sal) FROM emp WHERE deptno=30) 과 같은 결과
 ORDER BY sal, empno;
 
+SELECT *
+FROM emp
+WHERE sal > ALL (SELECT sal FROM emp WHERE deptno=30) 
+ORDER BY sal, empno;
+
+SELECT *
+FROM emp
+WHERE EXISTS (SELECT dname FROM dept WHERE deptno=10) -- 결과값이 하나이상 존재하면 조건식이 모두 true
+
+
+
