@@ -108,5 +108,27 @@ SELECT *
 FROM emp
 WHERE EXISTS (SELECT dname FROM dept WHERE deptno=10) -- 결과값이 하나이상 존재하면 조건식이 모두 true
 
+SELECT *
+FROM emp
+WHERE (deptno, sal) IN (SELECT deptno, MAX(sal)
+                        FROM emp
+                        GROUP BY deptno);
+
+SELECT E10.empno, E10.ename, E10.deptno, D.dname, D.loc
+FROM (SELECT * FROM emp WHERE deptno = 10) E10,
+     (SELECT * FROM DEPT) D
+WHERE E10.deptno = D.deptno;
+
+-- WITH 절
+WITH
+E10 AS (SELECT * FROM emp WHERE deptno = 10),
+D AS (SELECT * FROM DEPT)
+SELECT E10.empno, E10.ename, E10.deptno, D.dname, D.loc
+FROM E10, D
+WHERE E10.deptno = D.deptno;
+
+SELECT empno, ename, job, sal, (SELECT grade FROM salgrade WHERE E.sal BETWEEN losal AND hisal) AS salgrade,
+    deptno, (SELECT dname FROM dept WHERE E.deptno = dept.deptno) AS DNAME
+FROM emp E;
 
 
