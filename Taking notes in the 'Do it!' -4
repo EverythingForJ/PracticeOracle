@@ -1,1 +1,45 @@
-1
+REM DML명령어 : 데이터 조작어, 데이터 추가,변경,삭제
+
+
+CREATE table DEPT_TEMP
+AS SELECT * FROM DEPT;
+
+INSERT INTO DEPT_TEMP (DEPTNO, DNAME, LOC)
+VALUES(50, 'DATABASE', 'SEOUL');
+
+INSERT INTO DEPT_TEMP
+VALUES(60, 'NETWORK', 'BUSAN');
+
+INSERT INTO DEPT_TEMP (DEPTNO, DNAME, LOC)
+VALUES(70, 'WEB', NULL);
+
+INSERT INTO DEPT_TEMP (DEPTNO, DNAME, LOC)
+VALUES(80, 'MOBILE', '');
+
+INSERT INTO DEPT_TEMP (DEPTNO, LOC)
+VALUES(90, 'INCHEON');
+
+SELECT *
+FROM dept_temp;
+
+
+-- 날짜 데이터
+CREATE table EMP_TEMP
+AS SELECT * FROM EMP
+WHERE 1<>1; -- 행은 만들어지지않음
+
+INSERT INTO EMP_TEMP (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+VALUES(9999, '홍길동', 'PRESIDENT', NULL, '2001/01/01', 5000, 1000, 10);
+
+INSERT INTO EMP_TEMP (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+VALUES(1111, '성춘향', 'MANAGER', 9999, '2001-01-05', 4000, NULL, 20);
+
+INSERT INTO EMP_TEMP (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+VALUES(2111, '이순신', 'MANAGER', 9999, TO_DATE('07/01/2001', 'DD/MM/YYYY'), 4000, NULL, 20);
+
+INSERT INTO EMP_TEMP (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+VALUES(3111, '심청이', 'MANAGER', 9999, sysdate, 4000, NULL, 30);
+
+SELECT *
+FROM emp_temp;
+
