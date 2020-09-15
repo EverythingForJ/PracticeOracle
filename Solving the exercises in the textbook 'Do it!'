@@ -71,6 +71,36 @@ FROM emp;
 
 ---------------------------------------------------------------------------------------------------------------
 
+-- 212p 1.
+SELECT deptno, TRUNC(AVG(sal)) AS avg_sal, MAX(sal) as max_sal, MIN(sal) AS min_sal, count(*) AS cnt
+FROM emp
+GROUP BY deptno
+ORDER BY deptno DESC;
+
+-- 2.
+SELECT job, count(*)
+FROM emp
+GROUP BY job
+HAVING count(*) >= 3;
+
+-- 3.
+SELECT TO_CHAR(hiredate, 'YYYY') AS hire_year, deptno, count(*) AS cnt
+FROM emp
+GROUP BY TO_CHAR(hiredate, 'YYYY'), deptno;
+
+-- 213p 4.
+SELECT NVL2(comm, 'O', 'X') AS exist_comm, COUNT(*) AS CNT
+FROM emp
+GROUP BY NVL2(comm, 'O', 'X');
+
+-- 5.
+SELECT deptno, TO_CHAR(hiredate, 'YYYY') AS hire_year, COUNT(*) AS CNT, 
+MAX(sal) AS max_Sal, SUM(sal) AS sum_sal, ROUND(AVG(sal), 11) AS avg_sal
+FROM emp
+GROUP BY ROLLUP (deptno, TO_CHAR(hiredate, 'YYYY'));
+
+----------------------------------------------------------------------------------------------------------------
+
 -- 239p 1.
 -- SQL-99 이전 방식
 SELECT D.deptno, D.dname, E.empno, E.ename, E.sal
