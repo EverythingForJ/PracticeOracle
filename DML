@@ -1,0 +1,23 @@
+REM 새로운 데이터 추가하기
+-- INSERT INTO 테이블 VALUES
+-- 날짜형과 문자형은 반드시 홑따옴표를 사용해야한다. 반면, 숫자형은 홑따옴표를 사용하지않는다.
+-- 순서를 고민해야 한다.
+-- LITERAL의 사이즈를 고민하자.
+-- NULL을 고민해야 한다.
+
+INSERT INTO DEPT
+VALUES(50, 'DEVELOPMENT', 'SEOUL');
+
+INSERT INTO DEPT(LOC, DEPTNO, DNAME) -- 테이블의 기본 순서를 다르게 하려면
+VALUES('BUSAN', 60, 'DESIGN');
+
+INSERT INTO DEPT(DEPTNO, DNAME, LOC)
+VALUES(80, 'JAVA'); -- 값의 수가 퉁분하지 않습니다.라는 에러 발생
+
+-- NULL을 암시적으로 처리하는 방법
+INSERT INTO DEPT(DEPTNO, DNAME) -- LOC빼버리기
+VALUES(80, 'JAVA');
+
+-- NULL 명시적
+INSERT INTO DEPT(DEPTNO, DNAME, LOC)
+VALUES(80, 'JAVA', NULL); -- NULL입력
