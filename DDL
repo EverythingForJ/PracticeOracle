@@ -1,0 +1,28 @@
+-- CREATE
+
+CREATE TABLE MEMBER (
+    ID VARCHAR(14),
+    PASSWD VARCHAR(20)
+);
+-- 항상 테이블 만든 후 Table 생성 확인
+DESC USER_TABLES;
+
+SELECT TABLE_NAME
+FROM USER_TABLES; -- = SELECT * FROM TAB;
+
+SELECT * FROM TAB;
+
+CREATE TABLE STUDENT1(
+    HAKBUN CHAR(7), -- 2020-01
+    NAME VARCHAR2(20), -- 남궁민수
+    ADDRESS VARCHAR2(200), -- 서울시 강남구 역삼동 한독빌딩 8층
+    AGE NUMBER(3), --
+    BIRTHDAY DATE,
+    EMAIL VARCHAR2(100),
+    HEIGHT NUMBER(4,1), -- 177.3
+    WEIGHT NUMBER(4,1) -- 108.4
+);
+
+DROP TABLE student; -- 테이블을 삭제
+TRUNCATE TABLE Student; -- 테이블 안의 데이터만 삭제, rollback불가 (DDL) 
+DELETE FROM Student -- Rollback 가능 (DML)
