@@ -383,4 +383,16 @@ CONN PREV_HW/ORCL;
 
 SELECT * FROM SCOTT.SALGRADE;
 
+--------------------------------------------------------------------------------------------------------------
+
+-- 444p 1.
+DECLARE
+    I   NUMBER;
+BEGIN
+    FOR I IN 1..10 LOOP
+        IF MOD(I, 2) = 1 THEN -- 홀수라면
+            DBMS_OUTPUT.PUT_LINE('현재 I의 값 : ' || I);
+        END IF;
+    END LOOP;
+END;
 
