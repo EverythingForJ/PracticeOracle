@@ -8,25 +8,25 @@ public class BatchDemo {
 		Connection conn = dbconn.getConnection(); // 2,3
 		
 		String sql = "INSERT INTO EMP_TEST(empno, ename, job) VALUES (?,?,?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		PreparedStatement pstmt = conn.prepareStatement(sql); // 4
 		
 		int [] empnoArray = {1111, 2222,3333, 4444};
-		String [] enameArray = {"ÇÑÁö¹Î", "¹ÚÁö¹Î", "±èÁö¹Î", "È«Áö¹Î"};
+		String [] enameArray = {"í•œì§€ë¯¼", "ë°•ì§€ë¯¼", "ê¹€ì§€ë¯¼", "í™ì§€ë¯¼"};
 		String [] jobArray = {"Developer","Designer","Marktter", "Salesman"};
 		
 		for(int i =0; i<empnoArray.length; i++) {
 			pstmt.setInt(1, empnoArray[i]);
 			pstmt.setString(2, enameArray[i]);
-			pstmt.setString(3, jobArray[i]); // ºñ·Î¼Ò ¿ÏÀüÇÑ sql¹®Àå
-			pstmt.addBatch(); // batch¿¡ ´ã´Â´Ù.
+			pstmt.setString(3, jobArray[i]); // ë¹„ë¡œì†Œ ì™„ì „í•œ sqlë¬¸ì¥
+			pstmt.addBatch(); // batchì— ë‹´ëŠ”ë‹¤.
 		}
 		
 		int [] rows = pstmt.executeBatch();
 		if(rows.length == 4) {
-			System.out.println(rows.length+"°³ÀÇ ÀÔ·Â ¼º°ø");
+			System.out.println(rows.length+"ê°œì˜ ì…ë ¥ ì„±ê³µ");
 			for(int i : rows) {System.out.println(i);}
 		}else {
-			System.out.println("ÀÔ·Â ½ÇÆĞ");
+			System.out.println("ì…ë ¥ ì‹¤íŒ¨");
 		}
 		
 		System.out.println(rows);
