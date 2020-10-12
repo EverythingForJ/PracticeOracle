@@ -12,7 +12,7 @@ public class JDBCDemo1 {
 	private Scanner scan;
 	private Connection conn;
 	
-	public JDBCDemo1() { // »ý¼ºÀÚ
+	public JDBCDemo1() { // ìƒì„±ìž
 		this.scan = new Scanner(System.in);
 		DBConnection dbconn = new DBConnection();
 		this.conn = dbconn.getConnection(); // 2,3
@@ -34,22 +34,22 @@ public class JDBCDemo1 {
 		}
 	}
 	
-	void selectWhere(int choice) throws SQLException { // Á¶°Ç °Ë»ö
+	void selectWhere(int choice) throws SQLException { // ì¡°ê±´ ê²€ìƒ‰
 		String sql = "SELECT * FROM emp ";
 		String where = null;
 		switch(choice) {
 			case 2 : 
-				System.out.println("Ã£°íÀÚ ÇÏ½Ã´Â »ç¿øÀÇ ÀÌ¸§ : ");
+				System.out.println("ì°¾ê³ ìž í•˜ì‹œëŠ” ì‚¬ì›ì˜ ì´ë¦„ : ");
 				String name = this.scan.next().toUpperCase();
 				where = " WHERE UPPER(ename) = '" + name+ "' ";
 				break;
 			case 3 :
-				System.out.println("Ã£°íÀÚ ÇÏ½Ã´Â ºÎ¼­¹øÈ£ : ");
+				System.out.println("ì°¾ê³ ìž í•˜ì‹œëŠ” ë¶€ì„œë²ˆí˜¸ : ");
 				int deptno = this.scan.nextInt();
 				where = " WHERE deptno = " + deptno;
 				break;
 			case 4 : 
-				System.out.println("Ã£°íÀÚ ÇÏ½Ã´Â »ç¿øÀÇ ÀÔ»ç³âµµ : ");
+				System.out.println("ì°¾ê³ ìž í•˜ì‹œëŠ” ì‚¬ì›ì˜ ìž…ì‚¬ë…„ë„ : ");
 				String hiredate = this.scan.next(); // "1987"
 				where = " WHERE TO_CHAR(hiredate, 'YYYY') = '" + hiredate+ "' ";
 				break;
@@ -69,7 +69,7 @@ public class JDBCDemo1 {
 		if(stmt != null) stmt.close();
 	}
 	
-	void selectAll() throws SQLException{ // ¸ðµÎ º¸±â
+	void selectAll() throws SQLException{ // ëª¨ë‘ ë³´ê¸°
 		// 4. step
 		Statement stmt = this.conn.createStatement();
 		String sql = "SELECT * FROM emp ORDER BY empno ASC";
@@ -87,12 +87,12 @@ public class JDBCDemo1 {
 	
 	int showMenu() {
 		System.out.println("*****Menu*****");
-		System.out.println("1. ¸ðµÎ º¸±â");
-		System.out.println("2. »ç¿øÀÇ ÀÌ¸§À¸·Î °Ë»öÇÏ±â");
-		System.out.println("3. ºÎ¼­ ¹øÈ£·Î °Ë»öÇÏ±â");
-		System.out.println("4. ÀÔ»ç³âµµ·Î °Ë»öÇÏ±â");
-		System.out.println("9. Á¾·á");
-		System.out.println("¼±ÅÃ >> ");
+		System.out.println("1. ëª¨ë‘ ë³´ê¸°");
+		System.out.println("2. ì‚¬ì›ì˜ ì´ë¦„ìœ¼ë¡œ ê²€ìƒ‰í•˜ê¸°");
+		System.out.println("3. ë¶€ì„œ ë²ˆí˜¸ë¡œ ê²€ìƒ‰í•˜ê¸°");
+		System.out.println("4. ìž…ì‚¬ë…„ë„ë¡œ ê²€ìƒ‰í•˜ê¸°");
+		System.out.println("9. ì¢…ë£Œ");
+		System.out.println("ì„ íƒ >> ");
 		return this.scan.nextInt();
 	}
 }
